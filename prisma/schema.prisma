@@ -1,0 +1,155 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id       String  @id @default(uuid())
+  name     String
+  email    String  @unique
+  password String
+  image    String?
+
+  bio      String?
+  headline String?
+
+  role   Role   @default(USER)
+  status Status @default(ACTIVE)
+
+  blogs      Blog[]
+  blogLikes  BlogLike[]
+  savedBlogs SavedBlog[]
+  comments   BlogComment[]
+
+  followers UserFollow[] @relation("FollowingRelation")
+  following UserFollow[] @relation("FollowerRelation")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+enum Status {
+  ACTIVE
+  SUSPENDED
+}
+
+model Blog {
+  id      String  @id @default(uuid())
+  title   String
+  slug    String  @unique
+  excerpt String?
+  content String  @db.Text
+
+  image String?
+
+  status   BlogStatus @default(DRAFT)
+  featured Boolean    @default(false)
+
+  views Int @default(0)
+
+  authorId String
+  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  likes    BlogLike[]
+  savedBy  SavedBlog[]
+  comments BlogComment[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum BlogStatus {
+  PUBLISHED
+  DRAFT
+  BLOCKED
+}
+
+model Category {
+  id          String         @id @default(uuid())
+  name        String         @unique
+  description String
+  status      CategoryStatus @default(ACTIVE)
+
+  blogs Blog[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum CategoryStatus {
+  ACTIVE
+  HIDDEN
+}
+
+model BlogLike {
+  id String @id @default(uuid())
+
+  userId String
+  blogId String
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  blog Blog @relation(fields: [blogId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, blogId])
+}
+
+model SavedBlog {
+  id String @id @default(uuid())
+
+  userId String
+  blogId String
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  blog Blog @relation(fields: [blogId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, blogId])
+}
+
+model BlogComment {
+  id      String @id @default(uuid())
+  comment String
+
+  userId String
+  blogId String
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  blog Blog @relation(fields: [blogId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model UserFollow {
+  id String @id @default(uuid())
+
+  followerId  String
+  followingId String
+
+  follower  User @relation("FollowerRelation", fields: [followerId], references: [id], onDelete: Cascade)
+  following User @relation("FollowingRelation", fields: [followingId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@unique([followerId, followingId])
+}
+
+model logTraffic {
+  id    String   @id @default(uuid())
+  date  DateTime @unique
+  views Int      @default(0)
+}
