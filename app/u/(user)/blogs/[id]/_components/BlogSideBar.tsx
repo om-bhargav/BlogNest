@@ -20,8 +20,8 @@ interface Props {
 export default function BlogSideBar({form, control, categories, errors, isEditing, isSubmitting, isValid, uploading, watch }: Props) {
     console.log(form.getValues());
     return (
-        <div className="grid gap-6 flex-2 sticky top-0 lg:col-span-4 h-fit">
-            <Card className="rounded-3xl border p-6 shadow-sm">
+        <div className="grid gap-6 max-md:w-full flex-2 sticky top-0 lg:col-span-4 h-fit">
+            <Card className="rounded-3xl border p-6 max-md:w-full shadow-sm">
                 <div className="mb-6">
                     <h2 className="text-lg font-semibold">Publishing</h2>
                 </div>
