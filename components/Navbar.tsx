@@ -130,7 +130,7 @@ export function Navbar() {
               </Button>
             </SheetTrigger>
 
-            <SheetContent className="border-white/10 bg-black text-white">
+            <SheetContent className="border-white/10 px-5 bg-black text-white">
               <div className="mt-6 flex flex-col">
                 <SheetTitle className="mb-8 text-left text-xl font-bold text-white">
                   {SITE_NAME}

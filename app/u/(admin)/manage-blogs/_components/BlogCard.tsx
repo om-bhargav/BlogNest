@@ -79,11 +79,11 @@ export default function BlogCard({
         <div className="mb-4">
           <div className="mb-3 flex items-center gap-2">
             <Badge variant="outline" className="rounded-xl">
-              {blog.category}
+              {blog.category!.name}
             </Badge>
 
             <Badge variant="secondary" className="rounded-xl">
-              {blog.author}
+              {blog.author!.name}
             </Badge>
           </div>
 

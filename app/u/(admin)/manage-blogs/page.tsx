@@ -14,10 +14,11 @@ import { Blog } from "@/data/blogs.data";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
 import EmptyState from "@/components/EmptyState";
+import LoadingScreen from "@/components/panel/loading-screen";
 
 
 export default function BlogsGrid() {
-  const { data, mutate } = useSWR(
+  const { data, mutate,isLoading } = useSWR(
     "/api/admin/blogs",
     fetcher,
     {
@@ -113,7 +114,9 @@ export default function BlogsGrid() {
       setLoadingId(null);
     }
   };
-
+  if(isLoading){
+    return <LoadingScreen title="Loading blogs..."/>
+  }
   return (
     <main className="space-y-6">
       {/* HERO */}
@@ -188,7 +191,7 @@ export default function BlogsGrid() {
         {filtered.map((blog) => {
           const loading = loadingId === blog.id;
           return (
-            <BlogCard blog={blog} loading={loading} onDelete={deleteBlog} onToggleFeature={toggleFeature} onToggleStatus={toggleStatus} />
+            <BlogCard blog={blog} key={blog.id} loading={loading} onDelete={deleteBlog} onToggleFeature={toggleFeature} onToggleStatus={toggleStatus} />
           );
         })}
       </section>
