@@ -24,32 +24,8 @@ import { fetcher } from "@/lib/fetcher";
 import { useRouter } from "next/navigation";
 import LoadingScreen from "@/components/panel/loading-screen";
 import ErrorScreen from "@/components/panel/error-screen";
-import ErrorLoading from "@/components/ErrorLoading";
 import EmptyState from "@/components/EmptyState";
-type BlogStatus = "PUBLISHED" | "DRAFT" | "BLOCKED";
-
-type MyBlog = {
-  id: string;
-
-  title: string;
-
-  slug: string;
-
-  excerpt?: string;
-
-  image?: string;
-
-  views: number;
-
-  status: BlogStatus;
-
-  createdAt: string;
-
-  category: {
-    name: string;
-  };
-};
-
+import { Blog } from "@/data/blogs.data";
 export default function MyBlogsGrid() {
   const [search, setSearch] = useState("");
 
@@ -67,7 +43,7 @@ export default function MyBlogsGrid() {
     fetcher
   );
 
-  const blogs: MyBlog[] = data?.data || [];
+  const blogs: Blog[] = data?.data || [];
 
   /*
   =====================================
@@ -194,10 +170,7 @@ export default function MyBlogsGrid() {
             <MyBlogCard
             key={blog.id}
             loading={loadingId === blog.id}
-            blog={{
-              ...blog,
-              category: blog.category.name,
-            }}
+            blog={blog}
             onDelete={() => deleteBlog(blog.id)}
             onEdit={() => router.push(`/u/blogs/${blog.id}`)}
             onView={() => { }}

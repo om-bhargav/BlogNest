@@ -1,12 +1,8 @@
 export type Blog = {
   id: string;
   title: string;
-  author?: {
-    name: string;
-  }
-  category?:{
-    name: string;
-  }
+  author?: string;
+  category?:string;
   status?: "PUBLISHED" | "DRAFT" | "BLOCKED";
   featured?: boolean;
   views?: number;

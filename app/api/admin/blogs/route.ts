@@ -22,10 +22,16 @@ export async function GET() {
         category: true,
       },
     });
-
+    const formatted = blogs.map((blog) => {
+      return {
+        ...blog,
+        author: blog.author.name,
+        category: blog.category.name,
+      };
+    });
     return NextResponse.json({
       success: true,
-      data: blogs,
+      data: formatted,
     });
   } catch (error) {
     console.log(error);

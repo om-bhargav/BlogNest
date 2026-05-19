@@ -1,6 +1,4 @@
 "use client";
-
-import { MyBlog } from "@/data/myblogs.data";
 import {
   Calendar,
   Eye,
@@ -17,7 +15,7 @@ type Props = {
   blog: Blog;
   onDelete: (id: string) => void;
   onEdit: () => void;
-  onView: (blog: MyBlog) => void;
+  onView: (blog: Blog) => void;
   loading: boolean;
 };
 
