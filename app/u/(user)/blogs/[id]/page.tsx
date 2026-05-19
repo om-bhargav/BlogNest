@@ -25,7 +25,7 @@ export default function BlogEditorPage() {
 
       <form
         onSubmit={handleSubmit(handlers.onSubmit)}
-        className="flex gap-6 items-start"
+        className="flex max-md:flex-col gap-6 items-start"
       >
         {/* LEFT */}
         <div className="grid flex-4 gap-6 lg:col-span-8">
