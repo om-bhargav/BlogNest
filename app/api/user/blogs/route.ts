@@ -32,6 +32,11 @@ const createBlogSchema = z.object({
 
 export async function GET(request: NextRequest) {
   try {
+    const user = await getUser();
+    if(!user){
+      throw Error("Authentication needed!");
+    }
+    const id = user.id;
     const searchParams = request.nextUrl.searchParams;
 
     const search = searchParams.get("search") || "";
@@ -39,7 +44,6 @@ export async function GET(request: NextRequest) {
     const category = searchParams.get("category");
 
     const where = {
-
       ...(search && {
         OR: [
           {
@@ -64,7 +68,10 @@ export async function GET(request: NextRequest) {
     };
 
     const blogs = await prisma.blog.findMany({
-      where,
+      where:{
+        authorId: id,
+        ...where
+      },
 
       orderBy: {
         createdAt: "desc",

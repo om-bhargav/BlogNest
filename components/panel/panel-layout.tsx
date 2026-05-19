@@ -51,8 +51,8 @@ export default function PanelLayout({ children }: Props) {
           logout={logout}
         />
 
-        <main className="flex flex-1 h-full md:p-3 p-6">
-          <div className="flex-1 min-h-full overflow-y-auto rounded-4xl border bg-background/20 md:p-4 md:shadow-sm">
+        <main className="flex flex-1 h-full md:p-3 p-2">
+          <div className="flex-1 min-h-full overflow-y-auto rounded-4xl md:border md:bg-background/20 md:p-4 md:shadow-sm">
             {children}
           </div>
         </main>

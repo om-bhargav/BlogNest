@@ -131,3 +131,8 @@
 .swiper-pagination-bullet{
   @apply bg-gray-200!;
 }
+
+
+::-webkit-scrollbar,::-webkit-scrollbar-button,::-webkit-scrollbar-thumb{
+  display: none;
+}
